@@ -4,11 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
-require('./Employee');
+const dotenv = require('dotenv');
+dotenv.config();   
 
-const Employee = mongoose.model("employee");
 
-const mongoUrl = "mongodb+srv://mitch:3mqNpbxy5B3YBtrK@cluster0.v9qmu.mongodb.net/employeeapp?retryWrites=true&w=majority"
+//sRKyd4dCU7sP6M6
+const mongoUrl = process.env.MONGO_URL;
 mongoose.connect(mongoUrl, {
   useNewUrlParser:true,
   useUnifiedTopology:true
