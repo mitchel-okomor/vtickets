@@ -390,7 +390,8 @@ done();
 
       });
       
-     
+    
+
            //delete ticket
            describe('Delete ticket', function(done) {
         
@@ -407,6 +408,6 @@ done();
            })
                 }
             );
-          });   
+          }); 
 
 });

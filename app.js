@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+const { ValidationError } = require('express-validation')
 const dotenv = require('dotenv');
 dotenv.config();   
 
@@ -12,7 +13,8 @@ dotenv.config();
 const mongoUrl = process.env.MONGO_URL;
 mongoose.connect(mongoUrl, {
   useNewUrlParser:true,
-  useUnifiedTopology:true
+  useUnifiedTopology:true,
+  useCreateIndex:true
 });
 
 mongoose.connection.on("connected", ()=>{
@@ -37,9 +39,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//validation
+app.use(function(err, req, res, next) {
+  if (err instanceof ValidationError) {
+    return res.status(err.statusCode).json(err)
+  }
+ 
+  return res.status(500).json(err)
+})
+ 
+
 app.use('/users', usersRouter);
+
+
 app.use('/', (req, res)=>{
-  res.send("Welcome to employee backend");
+  res.send("Welcome to Events ticketing backend");
 });
 
 
