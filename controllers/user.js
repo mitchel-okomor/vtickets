@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('../models/users');
+require('../models/user');
 
 const User = mongoose.model("user");
 
@@ -8,12 +8,11 @@ const user ={
 
   createUser: (req,res)=>{
         const user = new User({
-          name: req.body.name,
+          firstname:req.body.firstname,
+          lastname: req.body.lastname,
           email: req.body.email,
+          password: req.body.password,
           phone: req.body.phone,
-          picture: req.body.picture,
-          salary: req.body.salary,
-          position: req.body.position
         })
         user.save()
         .then(data=>{
@@ -70,6 +69,16 @@ updateUser: (req, res)=>{
           console.log(err);
         })
       },
+
+     login: (req, res)=>{
+      User.find({email:req.body.email}).then(
+        data=>{
+          res.send(data);
+        }
+      ).catch(err=>{
+        console.log(err);
+      })
+    },
 }
 
 

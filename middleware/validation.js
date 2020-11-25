@@ -13,3 +13,5 @@ loginValidation: {
     }),
   }  
 }
+
+module.exports = validation;
