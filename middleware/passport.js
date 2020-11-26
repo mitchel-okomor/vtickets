@@ -18,11 +18,11 @@ JWTstrategy = require('passport-jwt').Strategy,
 
 
   //register a user
-passport.use('register', new LocalStrategy({usernameField:'email',
+ passport.use('register', new LocalStrategy({usernameField:'email',
 passwordField:'password',
 passReqToCallback : true},
-(req, done)=> {
-
+(req, username, password, done)=> {
+console.log(req.body)
    //hash password with bcrypt-nodejs
    let salt = bcrypt.genSaltSync(10);
    bcrypt.hash(req.body.password, salt, null, (error, hash) => {
@@ -33,24 +33,39 @@ passReqToCallback : true},
     //get all user information, password has already been declared in function parameters and will be hashed below
     const firstName = req.body.firstName.trim();
     const lastName = req.body.lastName.trim();
-    const number = req.body.number.trim();
+    const phone = req.body.number.trim();
     const email = req.body.email.trim();
-    let newPassword = hash;
+    let password = hash;
 
 //create new user
 try{
-  const newUser = new User({firstName, lastName, number, email, newPassword});
-  newUser.save((user)=> {
+  const newUser = new User({firstName, lastName, phone, email, password});
+newUser.save().then( user =>{
+    console.log("Mongo: "+ user);
     if (!user) {
-      return done(null, false, { message: 'user not registered' });
-    }
-    if (user) {
-      console.log("passport strategy "+user);
-      return done(null, user, { message: 'user successfully created',
-  data: user});
-    }
-    return done(null, user);
-  });
+        return done(null, false, { message: 'user not registered' });
+      }
+      if (user) {
+
+        const data = {
+          firstName : user.firstName,
+          lastName : user.lastName,
+          email : user.email,
+          phone: user.phone,
+        }
+
+        return done(null, user, {status:"success", message: 'user successfully created',
+    data});
+      }
+      return done(null, user);
+
+
+  }).catch(err=>{
+    console.log(err);
+    return done(err, null, null);
+  })
+
+ 
 }
 catch(err){
 if(err){
@@ -71,11 +86,12 @@ passReqToCallback : true},
   function(req, username, password, done) {
     console.log("Strategy "+username);
  
-User.find(username, function (user) {
+User.findOne({'email':username}, {}).then( user => {
       if (!user) {
         return done(null, false, { message: 'Incorrect username or password' });
       }
      else{
+       console.log("bcrypt "+ user.password)
        //compare user imputed password with database password
         bcrypt.compare (password, user.password,  (error, valid) => {
           if(error){console.log(error);}
@@ -89,9 +105,13 @@ User.find(username, function (user) {
         process.env.SECRET,
           {expiresIn: '24h'}
         );
-
-            console.log("passport strategy "+user.firstname);
-        return done(null, user, { message: 'logged in', user, token }); 
+const data = {
+  firstName : user.firstName,
+  lastName : user.lastName,
+  email : user.email,
+  phone: user.phone,
+}
+        return done(null, user, { message: 'logged in', data, token }); 
         }
         });
       }

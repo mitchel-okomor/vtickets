@@ -15,8 +15,8 @@ router.get('/', function(req, res, next) {
 
 
 //user routes
-router.post('/signup', validate(validation.loginValidation, {}, {}), auth.register);
-router.post('/login', validate(validation.loginValidation, {}, {}), auth.login)
+router.post('/signup', auth.register);
+router.post('/login',  auth.login)
 router.get('/user', auth.jwt, user.getUser);
 router.get('users', auth.jwt, user.getAllUsers);
 router.patch('/user', auth.jwt, user.updateUser);

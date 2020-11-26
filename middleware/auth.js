@@ -11,7 +11,7 @@ register:  (req, res, next) => {
       console.log(info);
       res.status(501).send(info);
     } else {
-      res.status(500).send(info);
+      res.status(500).send( info);
     }
   })(req, res, next);
 },
@@ -26,7 +26,7 @@ login: (req, res, next) => {
       console.log("login No user: "+info);
       res.status(401).send(info);
     } else {
-      res.status(200).send({info, user});
+      res.status(200).send({info});
     }
   })(req, res, next);
 },
