@@ -12,7 +12,7 @@ const dotenv = require('dotenv');
 dotenv.config();   
 
 
-//sRKyd4dCU7sP6M6
+
 const mongoUrl = process.env.MONGO_URL;
 mongoose.connect(mongoUrl, {
   useNewUrlParser:true,

@@ -5,25 +5,6 @@ const User = mongoose.model("user");
 
 const user ={
 
-
-  createUser: (req,res)=>{
-        const user = new User({
-          firstname:req.body.firstname,
-          lastname: req.body.lastname,
-          email: req.body.email,
-          password: req.body.password,
-          phone: req.body.phone,
-        })
-        user.save()
-        .then(data=>{
-          console.log(data);
-          res.send("success");
-        }).catch(err=>{
-          console.log(err);
-        })
-      },
-      
-
      getUser: (req, res, id)=>{
         User.findById(req.params.id).then(
           data=>{
@@ -70,15 +51,6 @@ updateUser: (req, res)=>{
         })
       },
 
-     login: (req, res)=>{
-      User.find({email:req.body.email}).then(
-        data=>{
-          res.send(data);
-        }
-      ).catch(err=>{
-        console.log(err);
-      })
-    },
 }
 
 

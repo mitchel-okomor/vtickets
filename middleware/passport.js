@@ -31,15 +31,16 @@ console.log(req.body)
         }
       
     //get all user information, password has already been declared in function parameters and will be hashed below
-    const firstName = req.body.firstName.trim();
-    const lastName = req.body.lastName.trim();
-    const phone = req.body.number.trim();
+    const firstname = req.body.firstname.trim();
+    const lastname = req.body.lastname.trim();
+    const phone = req.body.phone.trim();
     const email = req.body.email.trim();
+    const username = req.body.username.trim();
     let password = hash;
 
 //create new user
 try{
-  const newUser = new User({firstName, lastName, phone, email, password});
+  const newUser = new User({firstname, lastname, username, phone, email, password});
 newUser.save().then( user =>{
     console.log("Mongo: "+ user);
     if (!user) {
@@ -48,10 +49,12 @@ newUser.save().then( user =>{
       if (user) {
 
         const data = {
-          firstName : user.firstName,
-          lastName : user.lastName,
+          firstname : user.firstname,
+          lastname : user.lastname,
+          username:user.username,
           email : user.email,
           phone: user.phone,
+          userId: user._id,
         }
 
         return done(null, user, {status:"success", message: 'user successfully created',
@@ -106,12 +109,13 @@ User.findOne({'email':username}, {}).then( user => {
           {expiresIn: '24h'}
         );
 const data = {
-  firstName : user.firstName,
-  lastName : user.lastName,
+  firstname : user.firstname,
+  lastname : user.lastname,
   email : user.email,
   phone: user.phone,
+  userId: user._id,
 }
-        return done(null, user, { message: 'logged in', data, token }); 
+        return done(null, user, {status:'success', message: 'logged in', data, token }); 
         }
         });
       }

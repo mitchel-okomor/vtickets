@@ -11,7 +11,7 @@ register:  (req, res, next) => {
       console.log(info);
       res.status(501).send(info);
     } else {
-      res.status(500).send( info);
+      res.status(200).send( info);
     }
   })(req, res, next);
 },
