@@ -48,6 +48,7 @@ newUser.save().then( user =>{
       }
       if (user) {
 
+//prepare user info for res
         const data = {
           firstname : user.firstname,
           lastname : user.lastname,
@@ -57,8 +58,17 @@ newUser.save().then( user =>{
           userId: user._id,
         }
 
+        //sign token for user
+        const token = jwt.sign ({
+          userId: user.id,
+        },
+      process.env.SECRET,
+        {expiresIn: '24h'}
+      );
+
+      //send to user
         return done(null, user, {status:"success", message: 'user successfully created',
-    data});
+    data, token});
       }
       return done(null, user);
 
