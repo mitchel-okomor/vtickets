@@ -5,7 +5,7 @@ const User = mongoose.model("user");
 
 const user ={
 
-     getUser: (req, res, id)=>{
+     getUser: (req, res)=>{
         User.findById(req.params.id).then(
           data=>{
             res.send(data);

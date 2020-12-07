@@ -1,19 +1,30 @@
 const mongoose = require('mongoose');
-require('../models/ticket');
+require('../models/event');
 
-const Event = mongoose.model("ticket");
+const Event = mongoose.model("event");
 
 const event ={
 
 
   create: (req,res)=>{
+    const {title, 
+            description,
+            venue,
+            date,
+            time,
+            userId
+    
+    } = req.body
         const event = new Event({
-          userId: req.body.id,
-          eventId: req.body.id,
-          quanity: req.body.quantity,
-          token:token,
-          verified:false
+         title,
+         description,
+         venue,
+         date,
+         time,
+         userId,
+         image: req.file.filename
         })
+
         event.save()
         .then(data=>{
           console.log(data);

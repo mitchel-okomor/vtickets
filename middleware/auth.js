@@ -11,7 +11,7 @@ register:  (req, res, next) => {
       console.log(info);
       res.status(501).send(info);
     } else {
-      res.status(200).send( info);
+      res.status(200).send(info);
     }
   })(req, res, next);
 },
@@ -35,6 +35,7 @@ login: (req, res, next) => {
 
 //verify token in header
 jwt: (req, res, next) => {
+  console.log(req.headers);
   passport.authenticate('jwt',{session:false}, function (err, user, info) {
     if (err) {
       return next(err);

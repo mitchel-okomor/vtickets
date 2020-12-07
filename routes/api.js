@@ -4,6 +4,7 @@ const user = require("../controllers/user");
 const event = require("../controllers/event");
 const ticket = require("../controllers/ticket");
 const auth = require('../middleware/auth');
+const uplaod = require('../middleware/upload');
 const { validate, ValidationError, Joi } = require('express-validation');
 const validation = require('../middleware/validation')
 
@@ -17,14 +18,14 @@ router.get('/', function(req, res, next) {
 //user routes
 router.post('/signup', auth.register);
 router.post('/login',  auth.login)
-router.get('/user', auth.jwt, user.getUser);
+router.get('/user/:id', auth.jwt, user.getUser);
 router.get('users', auth.jwt, user.getAllUsers);
 router.patch('/user', auth.jwt, user.updateUser);
 router.delete('/user', auth.jwt, user.deleteUser);
 
 
 //event routes
-router.post('/event', auth.jwt, event.create);
+router.post('/event', auth.jwt, uplaod.single('image'), event.create);
 router.get('/events', event.getAll);
 router.get('/event', event.get);
 router.patch('/event', auth.jwt, event.update);
@@ -33,7 +34,7 @@ router.delete('/event', auth.jwt, event.delete);
 
 
 //ticket routes
-router.post('/ticket', auth.jwt,  ticket.create);
+router.post('/ticket', auth.jwt, uplaod.single('image'),  ticket.create);
 router.get('/tickets', auth.jwt, ticket.getAll);
 router.get('/ticket', auth.jwt, ticket.get);
 router.patch('/ticket', auth.jwt, ticket.update);
