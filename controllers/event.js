@@ -38,18 +38,28 @@ const event ={
      get: (req, res, id)=>{
         Event.findById(req.params.id).then(
           data=>{
-            res.send(data);
+            res.json(data);
           }
         ).catch(err=>{
           console.log(err);
         })
       },
 
+      getUserEvents:(req, res)=>{
+        Event.find({"userId": req.params.id}, {}).then(
+          data=>{
+            console.log(data)
+            res.json(data)
+          }
+        ).catch(err=>{
+          console.log(err);
+        }) 
+      },
 
       getAll: (req, res)=>{
         Event.find({}).then(
           data=>{
-            res.send(data);
+            res.json(data);
           }
         ).catch(err=>{
           console.log(err);

@@ -28,6 +28,7 @@ router.delete('/user', auth.jwt, user.deleteUser);
 router.post('/event', auth.jwt, uplaod.single('image'), event.create);
 router.get('/events', event.getAll);
 router.get('/event', event.get);
+router.get('/events/:id',auth.jwt, event.getUserEvents);
 router.patch('/event', auth.jwt, event.update);
  
 router.delete('/event', auth.jwt, event.delete);

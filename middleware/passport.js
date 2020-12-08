@@ -36,11 +36,13 @@ console.log(req.body)
     const phone = req.body.phone.trim();
     const email = req.body.email.trim();
     const username = req.body.username.trim();
+    const role = req.body.role
+
     let password = hash;
 
 //create new user
 try{
-  const newUser = new User({firstname, lastname, username, phone, email, password});
+  const newUser = new User({firstname, lastname, username, phone, role, email, password});
 newUser.save().then( user =>{
     console.log("Mongo: "+ user);
     if (!user) {
@@ -53,6 +55,7 @@ newUser.save().then( user =>{
           firstname : user.firstname,
           lastname : user.lastname,
           username:user.username,
+          role:user.role,
           email : user.email,
           phone: user.phone,
           userId: user._id,
@@ -123,6 +126,7 @@ const data = {
   lastname : user.lastname,
   email : user.email,
   phone: user.phone,
+  role: user.role,
   userId: user._id,
 }
         return done(null, user, {status:'success', message: 'logged in', data, token }); 
