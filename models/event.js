@@ -7,6 +7,8 @@ const eventSchema = new mongoose.Schema({
     date: String,
     time: String,
      image: String,
+     isApproved: {type:String, default:false},
+     isPublished: {type:String, default:false},
     userId: String,
 }, { timestamps: true });
 

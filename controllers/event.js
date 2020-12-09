@@ -7,6 +7,8 @@ const event ={
 
 
   create: (req,res)=>{
+
+    console.log("Creating event")
     const {title, 
             description,
             venue,
