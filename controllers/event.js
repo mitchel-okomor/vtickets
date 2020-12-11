@@ -30,7 +30,8 @@ const event ={
         event.save()
         .then(data=>{
           console.log(data);
-          res.send("success");
+          res.json({message:"success",
+      data});
         }).catch(err=>{
           console.log(err);
         })
@@ -79,13 +80,30 @@ const event ={
       },
       
 update: (req, res)=>{
+
+  console.log("updating")
+  const {title, 
+    description,
+    venue,
+    date,
+    time,
+    userId,
+
+} = req.body
     Event.findByIdAndUpdate(req.params.id, {
-        quanity: req.body.quantity,
-        verified:false
+       title: title,
+       description: description,
+      venue:  venue,
+      date:  date,
+       time: time,
+       userId: userId,
+        _id:req.params.id
+        },  {
+          new: true
         }).
         then(data=>{
           console.log(data);
-          res.send("Updated");
+          res.send(data);
         }).catch(err=>{
           console.log(err);
         })

@@ -6,10 +6,10 @@ const eventSchema = new mongoose.Schema({
     venue: String,
     date: String,
     time: String,
+     userId: String, 
      image: String,
      isApproved: {type:String, default:false},
      isPublished: {type:String, default:false},
-    userId: String,
 }, { timestamps: true });
 
 mongoose.model("event", eventSchema);

@@ -27,11 +27,11 @@ router.delete('/user', auth.jwt, user.deleteUser);
 //event routes
 router.post('/event', auth.jwt, uplaod.single('image'), event.create);
 router.get('/events', event.getAll);
-router.get('/event', event.get);
+router.get('/event/:id', event.get);
 router.get('/events/:id',auth.jwt, event.getUserEvents);
-router.patch('/event', auth.jwt, event.update);
+router.patch('/event/:id', auth.jwt, uplaod.single('image'), event.update);
  
-router.delete('/event', auth.jwt, event.delete);
+router.delete('/event/:id', auth.jwt, event.delete);
 
 
 //ticket routes
