@@ -1,28 +1,38 @@
 const mongoose = require('mongoose');
-require('../models/ticket');
+require('../models/order');
 
-const Ticket = mongoose.model("ticket");
+const Order = mongoose.model("order");
 
-const ticket ={
+const order ={
 
 
   create: (req,res)=>{
-Ticket.insertMany(req.body.cart, function(err,result){
+    const cart = req.body.cart;
+
+    //attach user to order from req
+    const orders = cart.map((item)=>{
+item.userId = req.body.userId;
+return item;
+    })
+    console.log(orders);
+Order.insertMany( orders, function(err,result){
 if(err){
   console.log(err)
 }
-console.log(result)
+res.status(200).json({
+    status: "success",
+    data: result,
+})
 })
 
-    console.log(req.body);
-        // const ticket = new Ticket({
+        // const order = new Order({
         //   userId: req.body.id,
         //   eventId: req.body.id,
         //   quanity: req.body.quantity,
         //   token:token,
         //   verified:false
         // })
-        // ticket.save()
+        // order.save()
         // .then(data=>{
         //   console.log(data);
         //   res.send("success");
@@ -33,7 +43,7 @@ console.log(result)
       
 
      get: (req, res, id)=>{
-        Ticket.findById(req.params.id).then(
+        Order.findById(req.params.id).then(
           data=>{
             res.send(data);
           }
@@ -44,7 +54,7 @@ console.log(result)
 
 
       getAll: (req, res)=>{
-        Ticket.find({}).then(
+        Order.find({}).then(
           data=>{
             res.send(data);
           }
@@ -54,7 +64,7 @@ console.log(result)
       },
 
     delete: (req,res)=>{
-        Ticket.findByIdAndRemove(req.params.id).
+        Order.findByIdAndRemove(req.params.id).
         then(data=>{
           console.log(data);
           res.send("deleted");
@@ -64,7 +74,7 @@ console.log(result)
       },
       
 update: (req, res)=>{
-    Ticket.findByIdAndUpdate(req.params.id, {
+    Order.findByIdAndUpdate(req.params.id, {
         quanity: req.body.quantity,
         verified:false
         }).
@@ -78,4 +88,4 @@ update: (req, res)=>{
 }
 
 
-module.exports = ticket;
+module.exports = order;

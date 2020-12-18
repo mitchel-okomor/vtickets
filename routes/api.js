@@ -3,6 +3,7 @@ var router = express.Router();
 const user = require("../controllers/user");
 const event = require("../controllers/event");
 const ticket = require("../controllers/ticket");
+const order = require("../controllers/order")
 const auth = require('../middleware/auth');
 const uplaod = require('../middleware/upload');
 const { validate, ValidationError, Joi } = require('express-validation');
@@ -30,9 +31,18 @@ router.get('/events', event.getAll);
 router.get('/event/:id', event.get);
 router.get('/events/:id',auth.jwt, event.getUserEvents);
 router.patch('/event/:id', auth.jwt, uplaod.single('image'), event.update);
- 
+router.put('/publish/:id',auth.jwt, event.togglePublish);
+router.put('/complete/:id',auth.jwt, event.toggleComplete);
 router.delete('/event/:id', auth.jwt, event.delete);
 
+
+//ticket routes
+router.post('/order', auth.jwt,  order.create);
+router.get('/order', auth.jwt, order.getAll);
+router.get('/order', auth.jwt, order.get);
+router.patch('/order', auth.jwt, order.update);
+ 
+router.delete('/order', auth.jwt, ticket.delete);
 
 //ticket routes
 router.post('/ticket', auth.jwt, uplaod.single('image'),  ticket.create);
