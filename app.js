@@ -7,7 +7,6 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-const { ValidationError } = require('express-validation')
 const dotenv = require('dotenv');
 dotenv.config();   
 
@@ -46,15 +45,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
-
-//validation
-app.use(function(err, req, res, next) {
-  if (err instanceof ValidationError) {
-    return res.status(err.statusCode).json(err)
-  }
- 
-  return res.status(500).json(err)
-})
  
 
 app.use('/api', api);
