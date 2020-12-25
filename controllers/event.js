@@ -9,7 +9,8 @@ const event ={
   create: (req,res)=>{
 
     console.log("Creating event")
-    const {title, 
+    const {title,
+            event_type,
             description,
             venue,
             date,
@@ -20,6 +21,7 @@ const event ={
     } = req.body
         const event = new Event({
          title,
+         event_type,
          description,
          venue,
          date,

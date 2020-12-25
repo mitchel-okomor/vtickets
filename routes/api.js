@@ -38,7 +38,7 @@ router.delete('/event/:id', auth.jwt, event.delete);
 
 //ticket routes
 router.post('/order', auth.jwt,  order.create);
-router.get('/order', auth.jwt, order.getAll);
+router.get('/orders', auth.jwt, order.getAll);
 router.get('/order', auth.jwt, order.get);
 router.patch('/order', auth.jwt, order.update);
  

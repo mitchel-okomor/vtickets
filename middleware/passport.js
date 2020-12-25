@@ -36,7 +36,7 @@ console.log(req.body)
     const phone = req.body.phone.trim();
     const email = req.body.email.trim();
     const username = req.body.username.trim();
-    const role = req.body.role
+    const role = req.body.role;
 
     let password = hash;
 
@@ -66,7 +66,7 @@ newUser.save().then( user =>{
           userId: user.id,
         },
       process.env.SECRET,
-        {expiresIn: '24h'}
+        {expiresIn: '12h'}
       );
 
       //send to user
@@ -119,7 +119,7 @@ User.findOne({'email':username}, {}).then( user => {
             userId: user.id,
           },
         process.env.SECRET,
-          {expiresIn: '24h'}
+          {expiresIn: '12h'}
         );
 const data = {
   firstname : user.firstname,

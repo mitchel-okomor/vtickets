@@ -54,6 +54,7 @@ res.status(200).json({
 
 
       getAll: (req, res)=>{
+        console.log("All orders")
         Order.find({}).then(
           data=>{
             res.send(data);
