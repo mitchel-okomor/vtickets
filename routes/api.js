@@ -6,8 +6,6 @@ const ticket = require("../controllers/ticket");
 const order = require("../controllers/order")
 const auth = require('../middleware/auth');
 const uplaod = require('../middleware/upload');
-const { validate, ValidationError, Joi } = require('express-validation');
-const validation = require('../middleware/validation')
 
 
 /* GET users listing. */
