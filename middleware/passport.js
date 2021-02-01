@@ -142,7 +142,7 @@ const data = {
 
 
 //verify a user token
-const opts ={jwtFromRequest: ExtractJWT.fromHeader('authorization'),
+const opts = {jwtFromRequest: ExtractJWT.fromHeader('authorization'),
 secretOrKey: process.env.SECRET
 };
 passport.use('jwt',  new JWTstrategy(opts, (jwt_payload, done)=>{

@@ -1,11 +1,15 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const orderSchema = new mongoose.Schema({
-    eventId: String,  
-    userId: String,
-    orderId: String,
-    quantity: String,
-    isPaid: {type:String, default:false},
-}, { timestamps: true });
+const orderSchema = new mongoose.Schema(
+  {
+    userId: { type: String, required: true },
+    orderId: { type: String, required: true },
+    cart: { type: Array, required: true },
+    amount: { type: Number, required: true },
+    transaction_ref: String,
+    isPaid: { type: String, default: false },
+  },
+  { timestamps: true }
+);
 
 mongoose.model("order", orderSchema);

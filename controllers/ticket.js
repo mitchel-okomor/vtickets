@@ -7,13 +7,6 @@ const ticket ={
 
 
   create: (req,res)=>{
-Ticket.insertMany(req.body.cart, function(err,result){
-if(err){
-  console.log(err)
-}
-console.log(result)
-})
-
     console.log(req.body);
         // const ticket = new Ticket({
         //   userId: req.body.id,
