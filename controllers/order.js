@@ -15,12 +15,13 @@ const orderId = () => {
 
 const order = {
   create: (req, res) => {
-    const { userId, cart, amount } = req.body;
+    const { userId, cart, amount, ref } = req.body;
     const orders = {
       userId,
       orderId: orderId(),
       cart,
       amount,
+      ref,
     };
     const NewOrder = new Order(orders);
     NewOrder.save(function (err, result) {

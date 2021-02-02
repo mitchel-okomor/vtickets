@@ -6,7 +6,7 @@ const orderSchema = new mongoose.Schema(
     orderId: { type: String, required: true },
     cart: { type: Array, required: true },
     amount: { type: Number, required: true },
-    transaction_ref: String,
+    ref: String,
     isPaid: { type: String, default: false },
   },
   { timestamps: true }

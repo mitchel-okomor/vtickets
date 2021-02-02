@@ -6,31 +6,11 @@ const ticket = require("../controllers/ticket");
 const order = require("../controllers/order");
 const auth = require("../middleware/auth");
 const uplaod = require("../middleware/upload");
-const request = require("request");
-const { response } = require("express");
-const { initializePayment, verifyPayment } = require("../utility/paystack")(
-  request
-);
+const payment = require("../controllers/payment");
 
-/* initialise payment. */
-router.post("/pay", function (req, res, next) {
-  const { full_name, email, amount } = req.body;
-  const form = {
-    amount,
-    email,
-    full_name,
-  };
-
-  initializePayment(form, (error, body) => {
-    if (error) {
-      //handle errors
-      console.log(error);
-      return;
-    }
-    const response = JSON.parse(body);
-    res.status(200).json(response.data);
-  });
-});
+/* payment. */
+router.post("/pay", payment.start);
+router.post("/verify-payment", payment.verify);
 
 //user routes
 router.post("/signup", auth.register);
