@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 require("../models/order");
+require("../models/payment");
+const jwt = require("jsonwebtoken");
 
 const Order = mongoose.model("order");
+const Payment = mongoose.model("payment");
 
 const request = require("request");
-const { response } = require("express");
 const { initializePayment, verifyPayment } = require("../utility/paystack")(
   request
 );
@@ -43,7 +45,7 @@ const payment = {
 
   verify: async (req, res) => {
     console.log("Body: " + req.body);
-    const { ref, orderId } = req.body;
+    const { ref, orderId, full_name, email, quantity } = req.body;
     console.log("ref: " + ref.reference);
     verifyPayment(ref.reference, (error, body) => {
       if (error) {
@@ -51,20 +53,22 @@ const payment = {
         console.log(error);
       }
       const response = JSON.parse(body);
-      const { customer, status, paid_at, reference } = response.data;
+      const { status, paid_at, reference } = response.data;
       console.log("Payment status: " + status);
       //update order
       if (status === "success") {
-        console.log(orderId);
         Order.findByIdAndUpdate(orderId, {
           isPaid: true,
         })
           .then((data) => {
+            //todo save payment info to database
             res.status(200).json(data);
           })
           .catch((err) => {
             console.log(err);
           });
+
+        const payment_info = { full_name };
       }
     });
   },
